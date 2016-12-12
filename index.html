@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Technote</title>
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"/>
+	<link rel="stylesheet" type="text/css" href="style/style.css"/>
+
+</head>
+<body>
+	<!-- Header de la page -->
+	<div class="header">
+		<p>Technote</p>
+		<div>
+			<a href="index.html">Démonstration</a>
+			<a href="code.html">Code</a>
+		</div>
+	</div>
+	<!-- Contenu de la page -->
+	<div class="content">
+		<div class="container">
+			<div class="premiere-partie">
+				<p>Appuyez sur CTRL pour sélectionner la deuxième couleur</p>
+				<div class="palette"></div>
+				<div class="couleursSelectionnes">
+					<input type="text" readonly="" id="color1"/>
+					<input type="text" readonly="" id="color2"/>
+				</div>
+				<div class="changementTaille">
+					<label for="nbCol">Nombre de couleurs : </label>
+					<input type="number" name="nbCol" id="nbCol" min="0"/>
+				</div>
+			</div>
+			<div class="deuxieme-partie">
+				<p>L'autre palette</p>
+				<div class="autrePalette"></div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer de la page -->
+	<div class="footer">
+		<p>PYZ Maxime</p>
+	</div>
+	
+	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>

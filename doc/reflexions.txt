@@ -1,0 +1,32 @@
+Dans l'exemple de la prof, de gauche à droite, on aumgente le bleu, puis le vert de 102, les valeurs sont donc 0 102 204
+
+de haut en bas, par 51
+
+valeurs : 0 51 102 153 204 255
+
+
+ce qu'on veut : 
+ - Deux palettes
+  - une qui liste les couleurs, deux couleurs sont selectionnables
+  - une qui liste une variante de couleur, elle est en triangle et peut varier en taille (par défaut à 9)
+
+ - Il faut pouvoir afficher les code RGB des couleurs sélectionnés et une couleur de l'autre palette
+
+
+
+
+ MAJ : 11/12/2016
+
+ Si le temps me le permet : Ajouter un interrupteur pour choisir le mode RGB ou hsv
+
+ Faire la derniere partie de l'exo : Matrice de contraste (J'ai pas très bien compris ...)
+
+ Faire la partie code 
+
+ Modifier les couleurs du site pour que ce soit mieux
+
+ https://coolors.co/
+
+ HTML
+ CSS
+ JS

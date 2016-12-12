@@ -1,0 +1,142 @@
+/*
+
+Tester avec les couleurs :
+F6F7EB pour le texte
+507DBC le header
+BBD1EA le body
+A1C6EA je sais pas
+
+*/
+
+body{
+	background-color: rgb(39,40,34);
+	color:white;
+	display: flex;
+	min-height: 100vh;
+  	flex-direction: column;
+}
+
+div.header{
+	background-color: rgb(34,35,29);
+	font-size:20px;
+	display: flex;
+	justify-content: space-around;
+	border-bottom: 1px solid rgba(229, 229, 229, 0.972549);
+	margin-bottom: 20px;
+}
+
+div.header p{
+	cursor: default;
+	font-size: 24px;
+	text-align: center;
+}
+
+div.header div{
+	display: flex;
+}
+
+div.header div a{
+	color:white;
+	text-decoration: none;
+	vertical-align: center;
+	margin: auto;
+	margin-right:25px;
+}
+
+div.header div a:hover{
+	color:grey;
+	transition: 0.7s;
+}
+
+div.content{
+	flex: 1;
+}
+
+div.container{
+	display: flex;
+	justify-content: center;
+}
+
+div.premiere-partie{
+	margin-right: 50px;
+}
+
+div.premiere-partie p{
+	width:300px;
+}
+
+div.deuxieme-partie p{
+	visibility: hidden;
+	text-align: center;
+	width: 264px;
+	margin-bottom: 34px;
+}
+
+
+div.row > div.selected{
+	border : 2px solid white !important;
+}
+
+div.row > div:hover{
+	border : 2px solid grey;
+}
+
+div.row > div{
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	border:2px solid black;
+	margin:2px 2px 2px 2px;
+}
+
+div.couleursSelectionnes{
+	margin-bottom: 10px;
+}
+
+input{
+	background-color: rgb(34,35,29);
+	border:1px solid black;
+	color:white;
+	text-align: center;
+	padding:5px 5px 5px 5px;
+	font-size: 0.9em;
+}
+
+div.couleursSelectionnes input{
+	width:133px;
+}
+
+div.couleursSelectionnes input:hover{
+	cursor: text;
+}
+
+div.rowInvert > div{
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	border:2px solid black;
+	margin:2px 2px 2px 2px;
+}
+
+div.autrePalette{
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+div.rowInvert{
+	width: 33px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+    width: 125px;
+}
+
+div.footer p{
+	text-align: center;
+}
