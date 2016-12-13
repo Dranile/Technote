@@ -8,9 +8,27 @@ A1C6EA je sais pas
 
 */
 
+*{	
+	--bcCouleurHeader:rgb(34,35,29);
+	--borderCouleurHeader:rgb(255,255,255);
+	--couleurLienHeader: white;
+	--couleurLienHeaderHover: grey;
+
+	--bcCouleur:rgb(39,40,34);
+	--texte:white;
+
+	--couleurInput: rgb(34,35,29);
+	--couleurTextInput: white;
+
+	--sliderBouton: white;
+	--sliderChecked:#2196F3 ;
+	--sliderBackground: #ccc ;
+
+}
+
 body{
-	background-color: rgb(39,40,34);
-	color:white;
+	background-color: var(--bcCouleur);
+	color:var(--texte);
 	display: flex;
 	min-height: 100vh;
   	flex-direction: column;
@@ -24,11 +42,11 @@ div.content{
 /* ----------------------------------------------------------------| HEADER |---------------------------------------------------------------------*/
 
 div.header{
-	background-color: rgb(34,35,29);
+	background-color: var(--bcCouleurHeader);
 	font-size:20px;
 	display: flex;
 	justify-content: space-around;
-	border-bottom: 1px solid rgba(229, 229, 229, 0.972549);
+	border-bottom: 1px solid var(--borderCouleurHeader);
 	margin-bottom: 20px;
 }
 
@@ -43,7 +61,7 @@ div.header div{
 }
 
 div.header div a{
-	color:white;
+	color:var(--couleurLienHeader);
 	text-decoration: none;
 	vertical-align: center;
 	margin: auto;
@@ -51,7 +69,7 @@ div.header div a{
 }
 
 div.header div a:hover{
-	color:grey;
+	color:var(--couleurLienHeaderHover);
 	transition: 0.7s;
 }
 

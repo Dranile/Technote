@@ -34,9 +34,9 @@ div.couleursSelectionnes{
 }
 
 div.premiere-partie input{
-	background-color: rgb(34,35,29);
+	background-color: var(--couleurInput);
 	border:1px solid black;
-	color:white;
+	color:var(--couleurTextInput);
 	text-align: center;
 	padding:5px 5px 5px 5px;
 	font-size: 0.9em;
@@ -122,7 +122,7 @@ div.divSlider span:last-child{
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: var(--sliderBackground);
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -134,17 +134,17 @@ div.divSlider span:last-child{
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: var(--sliderBouton);
   -webkit-transition: .4s;
   transition: .4s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: var(--sliderChecked);
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px var(--sliderChecked);
 }
 
 input:checked + .slider:before {
