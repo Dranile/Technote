@@ -9,24 +9,25 @@ A1C6EA je sais pas
 */
 
 *{	
-	--bcCouleurHeader:rgb(34,35,29);
-	--borderCouleurHeader:rgb(255,255,255);
+
+	--bcCouleurHeader:#0475A5;
+	--borderCouleurHeader:#0475A5;
 	--couleurLienHeader: white;
 	--couleurLienHeaderHover: grey;
 
-	--bcCouleur:rgb(39,40,34);
-	--texte:white;
+	--bcCouleur:white;
+	--texte:black;
 
-	--couleurInput: rgb(34,35,29);
+	--couleurInput: #0475A5;
 	--couleurTextInput: white;
 
 	--sliderBouton: white;
-	--sliderChecked:#2196F3 ;
-	--sliderBackground: #ccc ;
-
+	--sliderChecked:#0475A5 ;
+	--sliderBackground: #EFF2F2 ;
 }
 
 body{
+	font-family: "Roboto",serif;
 	background-color: var(--bcCouleur);
 	color:var(--texte);
 	display: flex;
@@ -51,6 +52,8 @@ div.header{
 }
 
 div.header p{
+	color: var(--couleurLienHeader);
+	font-weight: bold;
 	cursor: default;
 	font-size: 24px;
 	text-align: center;

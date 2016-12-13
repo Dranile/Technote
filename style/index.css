@@ -14,18 +14,18 @@ div.premiere-partie p{
 }
 
 div.row > div.selected{
-	border : 2px solid white !important;
+	border : 2px solid #0475A5 !important;
 }
 
 div.row > div:hover{
-	border : 2px solid grey;
+	border : 2px solid #06b0f9;
 }
 
 div.row > div{
 	display: inline-block;
 	width: 25px;
 	height: 25px;
-	border:2px solid black;
+	border:2px solid white;
 	margin:2px 2px 2px 2px;
 }
 
@@ -57,7 +57,7 @@ div.premiere-partie input[type="number"]::-webkit-inner-spin-button {
 }
 div.premiere-partie input[type="number"] {
     -moz-appearance: textfield;
-    width: 105px;
+    width: 129px;
 }
 
 /* ----------------------------------------------------------------| DEUXIEME PARTIE |---------------------------------------------------------------------*/
