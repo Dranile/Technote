@@ -12,8 +12,8 @@ A1C6EA je sais pas
 
 	--bcCouleurHeader:#0475A5;
 	--borderCouleurHeader:#0475A5;
-	--couleurLienHeader: white;
-	--couleurLienHeaderHover: grey;
+	--couleurLienHeader: lightgrey;
+	--couleurLienHeaderHover:white ;
 
 	--bcCouleur:white;
 	--texte:black;
@@ -23,7 +23,7 @@ A1C6EA je sais pas
 
 	--sliderBouton: white;
 	--sliderChecked:#0475A5 ;
-	--sliderBackground: #EFF2F2 ;
+	--sliderBackground: grey ;
 }
 
 body{
@@ -52,7 +52,7 @@ div.header{
 }
 
 div.header p{
-	color: var(--couleurLienHeader);
+	color: white;
 	font-weight: bold;
 	cursor: default;
 	font-size: 24px;
