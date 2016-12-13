@@ -5,6 +5,7 @@
 	<meta charset="utf-8"/>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"/>
 	<link rel="stylesheet" type="text/css" href="style/style.css"/>
+	<link rel="stylesheet" type="text/css" href="style/index.css"/>
 
 </head>
 <body>
@@ -18,6 +19,15 @@
 	</div>
 	<!-- Contenu de la page -->
 	<div class="content">
+		<div class="divSlider">
+			<span>HSV</span>
+			<!-- Rounded switch -->
+			<label class="switch">
+			  	<input type="checkbox">
+			  	<div class="slider round"></div>
+			</label>
+			<span>RGB</span>
+		</div>
 		<div class="container">
 			<div class="premiere-partie">
 				<p>Appuyez sur CTRL pour sélectionner la deuxième couleur</p>
@@ -32,7 +42,7 @@
 				</div>
 			</div>
 			<div class="deuxieme-partie">
-				<p>L'autre palette</p>
+				<p>Résultats</p>
 				<div class="autrePalette"></div>
 			</div>
 		</div>

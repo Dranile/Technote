@@ -16,6 +16,13 @@ body{
   	flex-direction: column;
 }
 
+
+div.content{
+	flex: 1;
+}
+
+/* ----------------------------------------------------------------| HEADER |---------------------------------------------------------------------*/
+
 div.header{
 	background-color: rgb(34,35,29);
 	font-size:20px;
@@ -48,94 +55,7 @@ div.header div a:hover{
 	transition: 0.7s;
 }
 
-div.content{
-	flex: 1;
-}
-
-div.container{
-	display: flex;
-	justify-content: center;
-}
-
-div.premiere-partie{
-	margin-right: 50px;
-}
-
-div.premiere-partie p{
-	width:300px;
-}
-
-div.deuxieme-partie p{
-	visibility: hidden;
-	text-align: center;
-	width: 264px;
-	margin-bottom: 34px;
-}
-
-
-div.row > div.selected{
-	border : 2px solid white !important;
-}
-
-div.row > div:hover{
-	border : 2px solid grey;
-}
-
-div.row > div{
-	display: inline-block;
-	width: 25px;
-	height: 25px;
-	border:2px solid black;
-	margin:2px 2px 2px 2px;
-}
-
-div.couleursSelectionnes{
-	margin-bottom: 10px;
-}
-
-input{
-	background-color: rgb(34,35,29);
-	border:1px solid black;
-	color:white;
-	text-align: center;
-	padding:5px 5px 5px 5px;
-	font-size: 0.9em;
-}
-
-div.couleursSelectionnes input{
-	width:133px;
-}
-
-div.couleursSelectionnes input:hover{
-	cursor: text;
-}
-
-div.rowInvert > div{
-	display: inline-block;
-	width: 25px;
-	height: 25px;
-	border:2px solid black;
-	margin:2px 2px 2px 2px;
-}
-
-div.autrePalette{
-	display: flex;
-	flex-direction: row-reverse;
-}
-
-div.rowInvert{
-	width: 33px;
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-input[type="number"] {
-    -moz-appearance: textfield;
-    width: 125px;
-}
+/* ----------------------------------------------------------------| FOOTER |---------------------------------------------------------------------*/
 
 div.footer p{
 	text-align: center;

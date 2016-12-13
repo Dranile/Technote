@@ -19,6 +19,13 @@ document.querySelector("input#nbCol").addEventListener("wheel",function(e){
 	$("input#nbCol").val(nbCol);
 }, false);
 
+document.querySelector("div.divSlider input").checked = true;
+var rgb = true;
+$("div.divSlider input").on('click', function(){
+	rgb = this.checked;
+});
+
+
 var tabBV = [0,102,204];
 var tabR = [0,51,102,153,204,255];
 var selected = [];
@@ -67,8 +74,13 @@ function clickPalette(e, scope){
 		document.querySelector("div.deuxieme-partie p").style.visibility = "visible";
 		var color1 = extractRVB(selected[0].style.backgroundColor);
 		var color2 = extractRVB(selected[1].style.backgroundColor);
-		var res = interpolationRGB(nbCol,color1,color2);
 
+		if(rgb){
+			var res = interpolationRGB(nbCol,color1,color2);
+		}
+		else{
+			var res = interpolationHSV(nbCol,color1,color2);
+		}
 
 		// console.log(res);
 		// for(var i in res){
@@ -105,11 +117,7 @@ function interpolationRGB(n, color1, color2){
 	for(var i=1; i<n+1;i++){
 			var R1 = color1[0];
 			var R2 = color2[0];
-			// console.log("f(" + 0 + ")=" + R1);
-			// console.log("f(" + (n+1) + ")=" + R2);
-			// console.log("c=" + i);
 			var resR = calculInterpolation(R1, R2, i, 0, n+1);
-			//console.log("res :" + resR);
 			var V1 = color1[1];
 			var V2 = color2[1];
 			var resV = calculInterpolation(V1, V2, i, 0, n+1);
@@ -124,17 +132,16 @@ function interpolationRGB(n, color1, color2){
 }
 
 function interpolationHSV(n, color1, color2) {
-	console.log(color1);
 	color1 = rgbToHsv(color1[0],color1[1],color1[2]);
-	console.log(color1);
 	color2 = rgbToHsv(color2[0],color2[1],color2[2]);
 	var s = moyenneCouleur(color1["s"],color2["s"]);
 	var v = moyenneCouleur(color1["v"],color2["v"]);
 	var array = [];
 	for(var i=1; i<n+1;i++){
 		var res = calculInterpolation(color1["h"], color2["h"], i, 0, n+1)
-		res = [res, s, v];
-		array.push(res);
+		resultat = HSVtoRGB(res/360,s/100,v/100);
+		resultat = [resultat[0], resultat[1], resultat[2]];
+		array.push(resultat);
 	}
 	return array;
 }
