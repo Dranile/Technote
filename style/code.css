@@ -1,0 +1,8 @@
+pre,code{
+	border-radius: 10px 10px 10px 10px;
+}
+
+pre{
+	width: 40%;
+	margin-left: 20px;
+}
