@@ -1,6 +1,6 @@
 var container = document.querySelector("div.palette");
 $("div.couleursSelectionnes input").val("");
-var nbCol = 3;
+var nbCol = 5;
 document.querySelector("input#nbCol").value = nbCol;
 document.querySelector("input#nbCol").addEventListener("change",function(){
 	nbCol = parseInt(this.value);

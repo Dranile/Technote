@@ -13,7 +13,6 @@ Lancez le fichier index.html dans le navigateur
 ### **4. NYI**
 * Matrice de contraste
 * Partie Code du site
-* Modifier les couleurs du site (la couleur actuel sera utilisé pour le code highlight)
 
 ### **5. Annexe**
 * https://coolors.co/
