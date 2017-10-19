@@ -3,6 +3,7 @@
 <head>
 	<title>Technote</title>
 	<meta charset="utf-8"/>
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"/>
 	<link rel="stylesheet" href="style/monokai-sublime.css">
 	<link rel="stylesheet" type="text/css" href="style/style.css"/>
@@ -11,7 +12,7 @@
 <body>
 	<!-- Header de la page -->
 	<div class="header">
-		<p>Technote</p>
+		<span>Technote</span>
 		<div>
 			<a href="index.html">Démonstration</a>
 			<a href="code.html">Code</a>
@@ -19,30 +20,270 @@
 	</div>
 	<!-- Contenu de la page -->
 	<div class="content">
-	<pre><code class="html">
-&lt;div class="premiere-partie"&gt;
-	&lt;p&gt;Appuyez sur CTRL pour sélectionner la deuxième couleur&lt;/p&gt;
-	&lt;div class="palette"&gt;&lt;/div&gt;
-	&lt;div class="couleursSelectionnes"&gt;
-		&lt;input type="text" readonly="" id="color1"/&gt;
-		&lt;input type="text" readonly="" id="color2"/&gt;
-	&lt;/div&gt;
-	&lt;div class="changementTaille"&gt;
-		&lt;label for="nbCol"&gt;Nombre de couleurs : &lt;/label&gt;
-		&lt;input type="number" name="nbCol" id="nbCol" min="0"/&gt;
-	&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class="deuxieme-partie"&gt;
-	&lt;p&gt;Résultats&lt;/p&gt;
-	&lt;div class="autrePalette"&gt;&lt;/div&gt;
-&lt;/div&gt;
-	</code></pre>
+		<div class="download">
+			<a href="doc/Technote.zip">Télécharger le code source</a>
+			<h1>Explication du code</h1>
+		</div>
+		<div class="menu">
+			<ol>
+				<li><a href="#palette">Palette de couleur principale</a></li>
+				<ol>
+					<li><a href="#couleur">La classe couleur</a></li>
+					<li><a href="#generationPalette">Génération de la palette</a></li>
+				</ol>
+				<li><a href="#gestionEvent">Gestionnaire d'évènement de la palette</a></li>
+				<li><a href="#Interpol">Interpolation linéaire</a></a></li>
+				<ol>
+					<li><a href="#calculInterpol">Calcul d'interpolation</a></li>
+					<li><a href="#generationInterpol">Génération de la palette</a></li>
+				</ol>
+				<li><a href="#matrice">La matrice de contraste</a></li>
+			</ol>
+		</div>
+		<div class="contenu">
+			<h2 id="palette">1. Palette de couleur principale</h2>
+			<p>
+				La palette de couleur principale est la première palette visible sur le site. Celle-ci présente diverses couleurs.
+			</p>
+			<h3 id="couleur">1.1. La classe couleur</h3>
+			<h4>HTML / CSS</h4>
+			<p>
+				La syntaxe d'un carré de couleur se présente en HTML comme cela :
+			</p>
+			<pre class="html"><code>
+&lt;div class="caseCouleur" nb="1" style="background-color: rgb(51, 102, 204);"&gt;&lt;/div&gt;
+			</code></pre>
+			<p>
+				Nous pouvons voir qu'un carré de couleur dans le DOM possède une classe <span>caseCouleur</span>, qui va servir pour le css, un attribut <span>nb</span>, permettant de retrouver rapidement la couleur dans un tableau javascript, et la couleur associée au carré.
+				Le style d'un carré est le suivant :
+			</p>
+			<pre class="css"><code>
+.caseCouleur{
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	border:2px solid black;
+	margin:2px 2px 2px 2px;
+}
+
+div.row > div.caseCouleur.selected{
+	border : 2px solid #0475A5 !important;
+}
+
+div.row > div.caseCouleur:hover{
+	border : 2px solid #06b0f9;
+}
+			</code></pre>
+			<h4>Javascript</h4>
+			<p>
+				La classe <span>Couleur</span> permet de générer des carrés de couleur. Elle a comme attribut les composantes RGB et HSV. Cette classe possède différentes méthodes tel que <span>toDOM()</span> qui permettent de créer une couleur en élément du DOM. Mais aussi des méthodes pour changer en RGB ou HSV. Ou encore des méthodes concernant la différence de contraste entre deux couleurs.
+			</p>
+			<p>
+				
+			</p>
+			<pre class="javascript"><code>
+function Couleur(rouge,vert,bleu,nb,h,s,v){
+	this.r = rouge || 0;
+	this.g = vert || 0;
+	this.b = bleu || 0;
+	this.DOM = null;
+	this.nb = nb || null;
+	this.h = h || null;
+	this.s = s || null;
+	this.v = v || null;
+
+	this.toDOM = function(){
+		var col = document.createElement("div");
+		$(col).toggleClass("caseCouleur");
+		col.style.backgroundColor = "rgb(" + this.r + "," +  this.g + "," +  this.b + ")";
+		if(this.nb != null){
+			col.setAttribute("nb", this.nb);
+		}
+		this.DOM = col;
+		return col;
+	}
+
+	this.brightness = function(){
+		return ((this.r * 299) + (this.g * 587) + (this.b * 114)) / 1000;
+	}
+
+	this.colorDiff = function(obj){
+		return ((Math.max(this.r,obj.r) - Math.min(this.r,obj.r)) + (Math.max(this.g,obj.g) - Math.min(this.g,obj.g))
+			+ (Math.max(this.b,obj.b) - Math.min(this.b,obj.b)));
+	}
+
+	this.calculContraste = function(obj){
+		var brightnessColor1 = this.brightness();
+		var brightnessColor2 = obj.brightness();
+		if((brightnessColor1 - brightnessColor2) > 125){
+			if(this.colorDiff(obj) > 500){
+				return true;
+			}
+		}
+		return false;
+	}
+}
+			</code></pre>
+			<h3 id="generationPalette">1.2. Génération de la palette</h3>
+			<p> La palette est générée grâce à la méthode <span>init()</span> de la classe <span>premierePalette</span>. Celle-ci parcourt deux tableaux de valeurs, crée des objets <span>Couleur</span> pour chaque valeurs, et les ajoute à un tableau attribut de <span>premierePalette</span>. Cette fonction génère aussi la partie DOM de la palette en même temps, en créant une nouvelle div à chaque nouvelle ligne. Le code est ci-dessous</p>
+			<pre class="javascript"><code>
+this.init = function(){
+	var nb = 1;
+	for(var k in this.tabR){
+		var divRow = document.createElement("div");
+		divRow.className = "row";
+		for(var j in this.tabBV){
+			for(var i in this.tabBV){
+				var col = new Couleur(this.tabR[k],this.tabBV[j],this.tabBV[i],nb);
+				var divColor = col.toDOM();
+
+				divRow.appendChild(divColor);
+				this.container.append(divRow);
+
+				this.tableauCouleur.push(col);
+				nb++;
+			}
+		}
+	}
+}				
+			</code></pre>
+			<h2 id="gestionEvent">2. Gestionnaire d'évènement de la palette</h2>
+			<p>Maintenant que la palette est réalisée, il faut pouvoir interagir avec elle pour pouvoir générer une nouvelle palette de couleur. Pour cela il faut ajouter un évènement <span>onclick</span> sur chacune des couleurs de la première palette. c'est la fonction <span>initEventPalette()</span> de la classe <span>Evenement</span>. Cette classe possède en attribut la première palette ainsi que la deuxième.</p>
+			<pre><code>
+this.initEventPalette = function(){
+	var tab =  this.premierePalette.tableauCouleur
+	var eventThis = this;
+	for(var i in tab){
+		tab[i].DOM.addEventListener("click",function(e){
+			eventThis.clickPalette(e, this);
+		},false);
+	}
+}
+			</code></pre>
+			<p>
+				Au moment d'un clic sur une couleur, le gestionnaire d'évènement, va appeller la fonction <span>clickPalette(e, this)</span>. Ici <span>e</span> est un objet évènement, il renseigne sur différents éléments au niveau du clic (notemment si l'utilisateur a appuyé sur ctrl ou non au moment du clic), et this est un objet du DOM, l'élément qui a été cliqué.
+			</p>
+			<p>
+				Pour générer la deuxieme palette, il faut choisir deux couleurs. La fonction <span>clickPalette()</span> va donc être en charge de garder uniquement deux éléments sélectionnés à la fois, un premier élement avec un clic, et le deuxième élément avec la commande ctrl + clic. 
+			</p>
+			<pre><code>
+this.clickPalette = function(e,scope){
+	var palette1 = this.premierePalette;
+	var nb = parseInt(scope.getAttribute("nb"));
+	var couleur = palette1.tableauCouleur[nb-1];
+
+	if(palette1.selected.includes(couleur)){
+		return;
+	}
+	if(e.ctrlKey){
+		if(palette1.selected[1] != undefined){
+			$(palette1.selected[1].DOM).toggleClass("selected");
+		}
+		palette1.selected[1] = couleur;
+		$("input#color2").val(palette1.selected[1].DOM.style.backgroundColor);
+	}
+	else{
+		if(palette1.selected[0] != undefined){
+			$(palette1.selected[0].DOM).toggleClass("selected");
+		}
+		palette1.selected[0] = couleur;
+		$("input#color1").val(palette1.selected[0].DOM.style.backgroundColor);
+	}
+	$(scope).toggleClass("selected");
+}
+			</code></pre>
+			<h2 id="Interpol">3. Interpolation linéaire</h2>
+			<p> Dans l'énoncé de l'exercice, il est demandé de faire l'interpolation linéaire de couleurs RGB puis de couleurs HSV, pour que l'on puisse voir les effets d'une ou de l'autre interpolation, il y a un interrupteur en haut à gauche dans la démonstration.</p>
+			<h3 id="calculInterpol">3.1. Calcul d'interpolation</h3>
+			<p>Le calcul de l'interpolation se fait suivant la formule :</p>
+			<pre><code>
+this.calculInterpolation = function (var1, var2, n, min, max){
+	return var1 + (n-min) * ((var2-var1)/(max-min));
+}
+			</code></pre>
+			<p>var1 et var2 sont les valeurs d'une composante r, v ou b. <span>n</span> est la n-ième couleur à calculer,<span>min</span> et <span>max</span> sont les bornes, max est le nombre de couleurs à avoir au final.</p>
+			<p>Pour l'interpolation RGB, il faut faire l'interpolation de chaque composante r,v,b alors que pour l'interpolation hsv, il suffit de faire l'interpolation du h</p>
+			<h3 id="generationInterpol">3.2. Génération de la palette</h3>
+			<p>La génération de la palette se fait grâce à deux fonctions, <span>createTableInter()</span> et <span>tableInter()</span>. <span>createTableInter()</span> va vérifier qu'il n'y a pas plus de 7 lignes déjà existantes, s'il y en a plus, on supprime la plus ancienne et on crée la nouvelle ligne. la fonction <span>tableInter()</span> génère la ligne pour l'afficher dans le DOM.</p>
+			<p>Lors de la destruction, création de ligne, une fonction Jquery est appelée : <span>slideUp()</span> et <span>slideDown()</span>. Cela permet de donner une indication à l'utilisateur concernant la ligne qui est en train d'être supprimée et celle qui vient d'être créée.</p>
+			<pre><code>
+this.createTableInter = function(array){
+	var divs = document.querySelectorAll(this.divRow);
+	if(divs.length > 7){
+		var state = this;
+		$(divs[0]).slideUp(400, function(){
+			$(divs[0]).remove();
+			state.tableInter(array);
+		});
+	}
+	else{
+		this.tableInter(array);
+	}
+	this.createMatrice(array);
+}
+
+this.tableInter = function(array){
+	var div = document.createElement("div");
+	div.className = "rowInvert";
+	for(var i in array){
+		var col = array[i].toDOM();
+		div.appendChild(col);
+	}
+	$(div).hide();
+	this.container.append(div);
+	$(div).slideDown(1000);
+}
+			</code></pre>
+			<h2 id="matrice">4. La matrice de contraste</h2>
+			<p>
+				La matrice de contraste est représentée sous forme d'un tableau, il y a deux colonnes, <span>couleur1</span> et <span>couleur2</span>. Si deux couleurs de l'interpolation linéaire ont un contraste suffisamment grand, alors les deux couleurs sont ajoutées au tableau. Cela permet d'assurer la lisibilité d'un texte écrit dans une couleur sur un fond d'une autre couleur. Les différents calculs sont dans la classe <span>Couleur</span> (affiché plus en haut) et tirés d'un article du W3C.
+			</p>
+			<pre><code>
+this.brightness = function(){
+	return ((this.r * 299) + (this.g * 587) + (this.b * 114)) / 1000;
+}
+
+this.colorDiff = function(obj){
+	return ((Math.max(this.r,obj.r) - Math.min(this.r,obj.r)) + (Math.max(this.g,obj.g) - Math.min(this.g,obj.g)) 
+		+ (Math.max(this.b,obj.b) - Math.min(this.b,obj.b)));
+}
+
+this.calculContraste = function(obj){
+	var brightnessColor1 = this.brightness();
+	var brightnessColor2 = obj.brightness();
+	if((brightnessColor1 - brightnessColor2) > 125){
+		if(this.colorDiff(obj) > 500){
+			return true;
+		}
+	}
+	return false;
+}					
+			</code></pre> 
+			<p>Dans la démonstration, il y a malheureusement peu de cas qui ont un contraste linéaire suffisamment grand. Seulement les couleurs opposées noir et blanc / gris ...</p>
+		</div>
+		
 	</div>
 	<!-- Footer de la page -->
 	<div class="footer">
 		<p>PYZ Maxime</p>
 	</div>
 	<script src="js/highlight.pack.js"></script>
-	<script>hljs.initHighlightingOnLoad();</script>
+	<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+	<script>
+		hljs.configure({
+		  	tabReplace: '    ', // 4 spaces
+		});
+		hljs.initHighlightingOnLoad();
+
+		$('a[href^="#"]').on('click', function(event) {
+		    var target = $(this.getAttribute('href'));
+		    if( target.length ) {
+		        event.preventDefault();
+		        $('html, body').stop().animate({
+		            scrollTop: target.offset().top
+		        }, 1000);
+		    }
+		});
+	</script>
 </body>
 </html>

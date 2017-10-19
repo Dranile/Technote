@@ -1,32 +1,32 @@
 div.container{
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
+}
+
+.caseCouleur{
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	border:2px solid black;
+	margin:2px 2px 2px 2px;
 }
 
 /* ----------------------------------------------------------------| PREMIERE PARTIE |---------------------------------------------------------------------*/
 
 div.premiere-partie{
-	margin-right: 50px;
+	/*margin-right: 50px;*/
 }
 
 div.premiere-partie p{
 	width:300px;
 }
 
-div.row > div.selected{
+div.row > div.caseCouleur.selected{
 	border : 2px solid #0475A5 !important;
 }
 
-div.row > div:hover{
+div.row > div.caseCouleur:hover{
 	border : 2px solid #06b0f9;
-}
-
-div.row > div{
-	display: inline-block;
-	width: 25px;
-	height: 25px;
-	border:2px solid white;
-	margin:2px 2px 2px 2px;
 }
 
 div.couleursSelectionnes{
@@ -57,10 +57,14 @@ div.premiere-partie input[type="number"]::-webkit-inner-spin-button {
 }
 div.premiere-partie input[type="number"] {
     -moz-appearance: textfield;
-    width: 129px;
+    width: 126px;
 }
 
 /* ----------------------------------------------------------------| DEUXIEME PARTIE |---------------------------------------------------------------------*/
+
+div.deuxieme-partie{
+	/*margin-right: 50px;*/
+}
 
 
 div.deuxieme-partie p{
@@ -70,13 +74,6 @@ div.deuxieme-partie p{
 	margin-bottom: 34px;
 }
 
-div.rowInvert > div{
-	display: inline-block;
-	width: 25px;
-	height: 25px;
-	border:2px solid black;
-	margin:2px 2px 2px 2px;
-}
 
 div.autrePalette{
 	display: flex;
@@ -160,4 +157,20 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+
+/*----------------------------------------------------------------| TROISIEME PARTIE |---------------------------------------------------------------------*/
+
+.troisieme-partie table{
+    border-collapse: collapse;
+    width: 264px;
+}
+.troisieme-partie  td, th{
+    border: 1px solid black;
+    text-align:center;
+}
+
+td > span{
+	display: block
 }

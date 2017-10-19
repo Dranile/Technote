@@ -2,10 +2,11 @@ var container = document.querySelector("div.palette");
 $("div.couleursSelectionnes input").val("");
 var nbCol = 5;
 document.querySelector("input#nbCol").value = nbCol;
+
 document.querySelector("input#nbCol").addEventListener("change",function(){
 	nbCol = parseInt(this.value);
 }, false);
-document.querySelector("input#nbCol").addEventListener("wheel",function(e){
+document.querySelector("body").addEventListener("wheel",function(e){
 	//scroll vers le bas
 	if(nbCol == 0 && e.deltaY > 0){
 		return;
@@ -161,7 +162,7 @@ function createTableInter(array){
 	else{
 		tableInter(array);
 	}
-	
+	createMatrice(array);
 }
 
 function tableInter(array){
@@ -246,4 +247,60 @@ function HSVtoRGB(h, s, v) {
 // Une couleur est un tableau de valeur pour le moment
 function moyenneCouleur(color1, color2){
 	return (color1 + color2)/2;
+}
+
+
+function createMatrice(array){
+	var tbody = document.querySelector("tbody");
+	$(tbody).html("");
+	for(var i in array){
+		for(var j in array){
+			if(i != j && calculContraste(array[i], array[j])){
+				// On créé une nouvelle ligne
+				var tr = document.createElement("tr");
+				var td1 = document.createElement("td");
+				var col = document.createElement("div");
+				col.style.backgroundColor = "rgb(" + Math.round(array[i][0]) + "," +  Math.round(array[i][1]) + "," +  Math.round(array[i][2]) + ")";
+				var p = document.createElement("span");
+				p.appendChild(document.createTextNode("rgb(" + Math.round(array[i][0]) + "," +  Math.round(array[i][1]) + "," +  Math.round(array[i][2]) + ")"));
+				td1.appendChild(col);
+				td1.appendChild(p);
+
+				var td2 = document.createElement("td");
+				col = document.createElement("div");
+				col.style.backgroundColor = "rgb(" + Math.round(array[j][0]) + "," +  Math.round(array[j][1]) + "," +  Math.round(array[j][2]) + ")";
+				p = document.createElement("span");
+				p.appendChild(document.createTextNode("rgb(" + Math.round(array[j][0]) + "," +  Math.round(array[j][1]) + "," +  Math.round(array[j][2]) + ")"));
+				td2.appendChild(col);
+				td2.appendChild(p);
+
+				tr.appendChild(td1);
+				tr.appendChild(td2);
+
+				tbody.appendChild(tr);
+			}
+		}
+	}
+}
+
+
+
+function calculContraste(color1, color2){
+	var brightnessColor1 = colorBrightness(color1);
+	var brightnessColor2 = colorBrightness(color2);
+	if((brightnessColor1 - brightnessColor2) > 125){
+		console.log(colorDiff(color1,color2))
+		if(colorDiff(color1, color2) > 500){
+			return true;
+		}
+	}
+	return false;
+}
+
+function colorBrightness(color){
+	return ((color[0]*299) + (color[1]*587) + (color[2]*114))/1000; 
+}
+
+function colorDiff(color1, color2){
+	return ((Math.max(color1[0],color2[0]) - Math.min(color1[0],color2[0])) + (Math.max(color1[1],color2[1]) - Math.min(color1[1],color2[1])) + (Math.max(color1[2],color2[2]) - Math.min(color1[2],color2[2])));
 }
